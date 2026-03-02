@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node --version)",
+      "Bash(npm --version)",
+      "Bash(winget install OpenJS.NodeJS.LTS)",
+      "Bash(cmd /c \"node --version && npm --version\")",
+      "Bash(powershell -Command \"[System.Environment]::GetEnvironmentVariable\\(''PATH'', ''Machine''\\) | Select-String -Pattern ''node|nodejs'' -SimpleMatch\")",
+      "Bash(powershell -Command \"[System.Environment]::GetEnvironmentVariable\\(''PATH'', ''Machine''\\)\")",
+      "Bash(\"/c/Program Files/nodejs/node.exe\" --version)",
+      "Bash(\"/c/Program Files/nodejs/npm.cmd\" --version)",
+      "Bash(\"/c/Program Files/nodejs/npm.cmd\" install -g @anthropic-ai/claude-code)",
+      "Bash(\"/c/Program Files/nodejs/node.exe\" \"/c/Program Files/nodejs/node_modules/@anthropic-ai/claude-code/cli.js\" --version)",
+      "Bash(powershell -Command \"Get-ChildItem ''C:\\\\Program Files\\\\nodejs\\\\node_modules\\\\@anthropic-ai\\\\'' -ErrorAction SilentlyContinue\")",
+      "Bash(powershell -Command \"& { $npmRoot = & ''C:\\\\Program Files\\\\nodejs\\\\npm.cmd'' root -g 2>&1; Write-Output $npmRoot }\")",
+      "Bash(\"C:/Program Files/nodejs/npm.cmd\" root -g)",
+      "Bash(\"/c/Program Files/nodejs/node.exe\" \"/c/Users/Pavle/AppData/Roaming/npm/node_modules/@anthropic-ai/claude-code/cli.js\" --version)",
+      "Bash(powershell -Command \"[System.Environment]::GetEnvironmentVariable\\(''PATH'', ''User''\\)\")",
+      "Bash(powershell -Command '$env:PATH = [System.Environment]::GetEnvironmentVariable\\(\"\"PATH\"\",\"\"Machine\"\"\\) + \"\";\"\" + [System.Environment]::GetEnvironmentVariable\\(\"\"PATH\"\",\"\"User\"\"\\); claude --version')",
+      "Bash(powershell -Command \"Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force\")",
+      "Bash(powershell -Command \"Get-ExecutionPolicy -List\")",
+      "Bash(powershell -Command \"Get-ExecutionPolicy\")",
+      "Bash(powershell -Command \"claude --version\")",
+      "Bash(powershell -Command '$env:PATH -split \"\";\"\" | Select-String \"\"npm|node\"\"')",
+      "Bash(powershell -Command \"if \\(!\\(Test-Path $PROFILE\\)\\) { New-Item -Path $PROFILE -ItemType File -Force }; $PROFILE\")",
+      "Bash(powershell -Command \"Add-Content -Path $PROFILE -Value ''$env:PATH = $env:PATH + \"\";C:\\\\Users\\\\Pavle\\\\AppData\\\\Roaming\\\\npm;C:\\\\Program Files\\\\nodejs\"\"''\")",
+      "Bash(powershell -Command \". $PROFILE; claude --version\")",
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "Bash(netstat:*)",
+      "Bash(taskkill:*)",
+      "Bash(cmd:*)",
+      "Bash(git filter-repo:*)",
+      "Bash(python3:*)",
+      "Bash(node:*)"
+    ]
+  }
+}
