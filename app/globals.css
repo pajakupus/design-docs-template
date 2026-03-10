@@ -7,6 +7,54 @@
 :root {
   --background: #f3f4f6;
   --foreground: #111827;
+
+  /* ── Button tokens ─────────────────────────────── */
+  --btn-bg-primary:        #C67C4E;
+  --btn-bg-primary-hover:  #A8623A;
+  --btn-text-primary:      #FFFFFF;
+  --btn-radius:            6px;
+  --btn-padding-x:         16px;
+  --btn-padding-y:         8px;
+  --btn-font-size:         14px;
+  --btn-font-weight:       500;
+  --btn-transition:        150ms ease;
+  --btn-focus-ring-color:  #C67C4E;
+  --btn-disabled-opacity:  0.4;
+
+  /* ── Badge tokens ──────────────────────────────── */
+  --badge-radius:      9999px;
+  --badge-px:          10px;
+  --badge-py:          2px;
+  --badge-font-size:   12px;
+  --badge-font-weight: 500;
+  --badge-bg-default:  #f3f4f6;
+  --badge-text-default:#374151;
+  --badge-bg-brand:    #F3D9CF;
+  --badge-text-brand:  #A8623A;
+
+  /* ── Input tokens ──────────────────────────────── */
+  --input-height:        36px;
+  --input-radius:        6px;
+  --input-border:        #d1d5db;
+  --input-border-focus:  #C67C4E;
+  --input-border-error:  #ef4444;
+  --input-bg:            #ffffff;
+  --input-bg-disabled:   #f3f4f6;
+  --input-text:          #111827;
+  --input-placeholder:   #9ca3af;
+  --input-px:            12px;
+  --input-py:            8px;
+  --input-font-size:     14px;
+
+  /* ── Card tokens ───────────────────────────────── */
+  --card-radius:          8px;
+  --card-border:          #e5e7eb;
+  --card-border-hover:    #d1d5db;
+  --card-border-selected: #C67C4E;
+  --card-bg:              #ffffff;
+  --card-shadow:          0 1px 3px rgba(0,0,0,.10);
+  --card-shadow-hover:    0 4px 6px rgba(0,0,0,.10);
+  --card-padding:         20px;
 }
 
 * {

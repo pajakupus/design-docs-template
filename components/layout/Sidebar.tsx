@@ -4,12 +4,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { navigation } from "@/lib/docs-data";
 import { cn } from "@/lib/utils";
+import StatusBadge from "@/components/docs/StatusBadge";
+import { Search } from "lucide-react";
 
 export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-52 flex-shrink-0 bg-white border-r border-gray-200 flex flex-col overflow-y-auto">
+    <aside className="w-56 flex-shrink-0 bg-white border-r border-gray-200 flex flex-col overflow-y-auto">
       {/* Logo / Brand */}
       <div className="px-4 py-5 border-b border-gray-200">
         <div className="flex items-center gap-2">
@@ -18,6 +20,21 @@ export default function Sidebar() {
           </div>
           <span className="text-sm font-semibold text-gray-900">Design System</span>
         </div>
+      </div>
+
+      {/* Search trigger */}
+      <div className="px-3 py-2 border-b border-gray-200">
+        <button
+          type="button"
+          onClick={() => {
+            window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true, bubbles: true }));
+          }}
+          className="w-full flex items-center gap-2 rounded-md border border-gray-200 bg-gray-50 px-3 py-1.5 text-xs text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors text-left"
+        >
+          <Search className="h-3.5 w-3.5 flex-shrink-0" />
+          <span className="flex-1">Search…</span>
+          <kbd className="font-mono text-[10px] bg-white border border-gray-200 rounded px-1">⌘K</kbd>
+        </button>
       </div>
 
       {/* Navigation */}
@@ -55,7 +72,10 @@ export default function Sidebar() {
                           <line x1="6" y1="6.5" x2="10" y2="4.8" stroke="currentColor" strokeWidth="1" opacity=".4" />
                         </svg>
                       )}
-                      {item.label}
+                      <span className="flex-1 truncate">{item.label}</span>
+                      {item.status && !isActive && (
+                        <StatusBadge status={item.status} size="sm" />
+                      )}
                     </Link>
                   </li>
                 );

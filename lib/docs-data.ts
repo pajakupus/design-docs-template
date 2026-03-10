@@ -3,20 +3,45 @@ export type NavSection = {
   items: NavItem[];
 };
 
+export type ComponentStatus = 'stable' | 'beta' | 'experimental' | 'deprecated';
+
 export type NavItem = {
   label: string;
   slug: string;
   href?: string;  // overrides the default /docs/${slug} if set
   icon?: string;
+  status?: ComponentStatus;
 };
+
+export type PropDef = {
+  name: string;
+  type: string;
+  default: string;
+  required: boolean;
+  description: string;
+};
+
+export type PropSchemaField =
+  | { type: 'select'; options: string[]; default: string }
+  | { type: 'boolean'; default: boolean }
+  | { type: 'string'; default: string }
+  | { type: 'number'; default: number; min?: number; max?: number }
+  | { type: 'color'; default: string };
+
+export type PropSchema = Record<string, PropSchemaField>;
 
 export type ComponentDoc = {
   name: string;
   description: string;
   slug: string;
+  status?: ComponentStatus;
   states: StateExample[];
   types: TypeExample[];
   tokens: DesignToken[];
+  props?: PropDef[];
+  propSchema?: PropSchema;
+  /** Complete single-block implementation showing all variants + states */
+  fullCode?: string;
 };
 
 export type StateExample = {
@@ -44,23 +69,23 @@ export const navigation: NavSection[] = [
   {
     title: "Foundations",
     items: [
-      { label: "Colors", slug: "colors" },
-      { label: "Typography", slug: "typography" },
-      { label: "Spacing", slug: "spacing" },
-      { label: "Shadows", slug: "shadows" },
+      { label: "Colors", slug: "colors", status: "stable" },
+      { label: "Typography", slug: "typography", status: "stable" },
+      { label: "Spacing", slug: "spacing", status: "beta" },
+      { label: "Shadows", slug: "shadows", status: "beta" },
     ],
   },
   {
     title: "Components",
     items: [
-      { label: "Button", slug: "button" },
-      { label: "Badge", slug: "badge" },
-      { label: "Input", slug: "input" },
-      { label: "Checkbox", slug: "checkbox" },
-      { label: "Card", slug: "card" },
-      { label: "Dialog", slug: "dialog" },
-      { label: "Toast", slug: "toast" },
-      { label: "Tooltip", slug: "tooltip" },
+      { label: "Button", slug: "button", status: "stable" },
+      { label: "Badge", slug: "badge", status: "stable" },
+      { label: "Input", slug: "input", status: "stable" },
+      { label: "Checkbox", slug: "checkbox", status: "beta" },
+      { label: "Card", slug: "card", status: "stable" },
+      { label: "Dialog", slug: "dialog", status: "experimental" },
+      { label: "Toast", slug: "toast", status: "experimental" },
+      { label: "Tooltip", slug: "tooltip", status: "beta" },
     ],
   },
   {
@@ -84,79 +109,55 @@ export const componentDocs: Record<string, ComponentDoc> = {
     description:
       "Triggers an action or event, such as submitting a form, opening a dialog, or performing a delete operation.",
     slug: "button",
+    status: "stable",
     states: [
       {
         state: "Default",
         description: "Baseline component styling. Ready for user interaction.",
         preview: "default",
-        code: `<button
-  className="inline-flex items-center justify-center
-    rounded-md px-4 py-2 text-sm font-medium
-    bg-terracotta-600 text-white
-    transition-colors"
->
+        code: `<button className="
+  bg-[var(--btn-bg-primary)] text-[var(--btn-text-primary)]
+  rounded-[var(--btn-radius)]
+  px-[var(--btn-padding-x)] py-[var(--btn-padding-y)]
+  text-sm font-medium transition-all duration-150
+  inline-flex items-center justify-center
+">
   Button
 </button>`,
       },
       {
         state: "Hover",
-        description:
-          "Pointer hover feedback. Darkens background to terracotta-700.",
+        description: "Pointer hover feedback. Darkens background to terracotta-700.",
         preview: "hover",
-        code: `<button
-  className="inline-flex items-center justify-center
-    rounded-md px-4 py-2 text-sm font-medium
-    bg-terracotta-600 text-white
-    hover:bg-terracotta-700
-    transition-colors"
->
-  Button
-</button>`,
+        code: `{/* Add to base button className: */}
+hover:bg-[var(--btn-bg-primary-hover)]`,
       },
       {
         state: "Focus",
         description: "Keyboard focus outline. Adds ring for accessibility.",
         preview: "focus",
-        code: `<button
-  className="inline-flex items-center justify-center
-    rounded-md px-4 py-2 text-sm font-medium
-    bg-terracotta-600 text-white
-    focus:outline-none focus:ring-2
-    focus:ring-terracotta-600 focus:ring-offset-2
-    transition-colors"
->
-  Button
-</button>`,
+        code: `{/* Add to base button className: */}
+focus:outline-none
+focus:ring-2
+focus:ring-[var(--btn-focus-ring-color)]
+focus:ring-offset-2`,
       },
       {
         state: "Pressed",
         description: "Active press feedback. Scale down with darker fill.",
         preview: "pressed",
-        code: `<button
-  className="inline-flex items-center justify-center
-    rounded-md px-4 py-2 text-sm font-medium
-    bg-terracotta-600 text-white
-    active:bg-terracotta-700 active:scale-[0.98]
-    transition-all"
->
-  Button
-</button>`,
+        code: `{/* Add to base button className: */}
+active:bg-[var(--btn-bg-primary-hover)]
+active:scale-[0.97]`,
       },
       {
         state: "Disabled",
-        description:
-          "Muted, non-interactive state. Reduces opacity and removes pointer events.",
+        description: "Muted, non-interactive state. Reduces opacity and removes pointer events.",
         preview: "disabled",
-        code: `<button
-  disabled
-  className="inline-flex items-center justify-center
-    rounded-md px-4 py-2 text-sm font-medium
-    bg-terracotta-600 text-white
-    opacity-40 cursor-not-allowed
-    pointer-events-none"
->
-  Button
-</button>`,
+        code: `{/* Add to base button className: */}
+disabled:opacity-[var(--btn-disabled-opacity)]
+disabled:cursor-not-allowed
+disabled:pointer-events-none`,
       },
     ],
     types: [
@@ -164,41 +165,52 @@ export const componentDocs: Record<string, ComponentDoc> = {
         variant: "Primary",
         description: "Main call-to-action. Use sparingly, one per view.",
         preview: "primary",
-        code: `<Button variant="primary">Primary</Button>
-// className: bg-terracotta-600 text-white hover:bg-terracotta-700`,
+        code: `<button className="
+  bg-[var(--btn-bg-primary)] text-[var(--btn-text-primary)]
+  hover:bg-[var(--btn-bg-primary-hover)]
+  rounded-[var(--btn-radius)] px-[var(--btn-padding-x)] py-[var(--btn-padding-y)]
+  text-sm font-medium transition-all duration-150
+">Button</button>`,
       },
       {
         variant: "Secondary",
-        description:
-          "Supporting action. Pairs with primary on the same surface.",
+        description: "Supporting action. Pairs with primary on the same surface.",
         preview: "secondary",
-        code: `<Button variant="secondary">Secondary</Button>
-// className: bg-gray-100 text-gray-900 hover:bg-gray-200`,
+        code: `<button className="
+  bg-gray-100 text-gray-900 hover:bg-gray-200
+  rounded-[var(--btn-radius)] px-[var(--btn-padding-x)] py-[var(--btn-padding-y)]
+  text-sm font-medium transition-all duration-150
+">Button</button>`,
       },
       {
         variant: "Outline",
-        description:
-          "Border-only button for tertiary actions or less prominent CTAs.",
+        description: "Border-only button for tertiary actions or less prominent CTAs.",
         preview: "outline",
-        code: `<Button variant="outline">Outline</Button>
-// className: border border-gray-300 bg-white text-gray-700
-//            hover:bg-gray-50`,
+        code: `<button className="
+  border border-gray-300 bg-white text-gray-700 hover:bg-gray-50
+  rounded-[var(--btn-radius)] px-[var(--btn-padding-x)] py-[var(--btn-padding-y)]
+  text-sm font-medium transition-all duration-150
+">Button</button>`,
       },
       {
         variant: "Ghost",
-        description:
-          "Minimal presence. Use inside menus, toolbars, or inline actions.",
+        description: "Minimal presence. Use inside menus, toolbars, or inline actions.",
         preview: "ghost",
-        code: `<Button variant="ghost">Ghost</Button>
-// className: text-gray-700 hover:bg-gray-100`,
+        code: `<button className="
+  bg-transparent text-gray-700 hover:bg-gray-100
+  rounded-[var(--btn-radius)] px-[var(--btn-padding-x)] py-[var(--btn-padding-y)]
+  text-sm font-medium transition-all duration-150
+">Button</button>`,
       },
       {
         variant: "Destructive",
-        description:
-          "Irreversible or high-risk actions. Typically delete or remove.",
+        description: "Irreversible or high-risk actions. Typically delete or remove.",
         preview: "destructive",
-        code: `<Button variant="destructive">Delete</Button>
-// className: bg-red-600 text-white hover:bg-red-700`,
+        code: `<button className="
+  bg-red-600 text-white hover:bg-red-700
+  rounded-[var(--btn-radius)] px-[var(--btn-padding-x)] py-[var(--btn-padding-y)]
+  text-sm font-medium transition-all duration-150
+">Button</button>`,
       },
     ],
     tokens: [
@@ -269,63 +281,119 @@ export const componentDocs: Record<string, ComponentDoc> = {
         category: "State",
       },
     ],
+    props: [
+      { name: 'variant', type: "'primary' | 'secondary' | 'ghost' | 'outline' | 'destructive'", default: "'primary'", required: false, description: 'Visual style of the button' },
+      { name: 'size', type: "'sm' | 'md' | 'lg'", default: "'md'", required: false, description: 'Size of the button' },
+      { name: 'disabled', type: 'boolean', default: 'false', required: false, description: 'Disables interaction and applies muted styles' },
+      { name: 'children', type: 'React.ReactNode', default: '—', required: true, description: 'Button label or content' },
+      { name: 'onClick', type: '() => void', default: '—', required: false, description: 'Click event handler' },
+      { name: 'className', type: 'string', default: '—', required: false, description: 'Additional CSS classes' },
+    ],
+    propSchema: {
+      variant: { type: 'select', options: ['primary', 'secondary', 'ghost', 'outline', 'destructive'], default: 'primary' },
+      state:   { type: 'select', options: ['default', 'hover', 'focus', 'pressed', 'disabled'], default: 'default' },
+      size:    { type: 'select', options: ['sm', 'md', 'lg'], default: 'md' },
+      label:   { type: 'string', default: 'Button' },
+    },
+    fullCode: `// Button.tsx — complete Tailwind + token implementation
+import { cn } from '@/lib/utils';
+
+type Variant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive';
+type Size    = 'sm' | 'md' | 'lg';
+
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: Variant;
+  size?:    Size;
+}
+
+// Base classes shared by every variant
+const base =
+  'inline-flex items-center justify-center font-medium transition-all duration-150 ' +
+  'rounded-[var(--btn-radius)] ' +
+  'focus:outline-none focus:ring-2 focus:ring-[var(--btn-focus-ring-color)] focus:ring-offset-2 ' +
+  'active:scale-[0.97] ' +
+  'disabled:opacity-[var(--btn-disabled-opacity)] disabled:cursor-not-allowed disabled:pointer-events-none';
+
+// Variant-specific colour classes (reference design tokens where available)
+const variantClass: Record<Variant, string> = {
+  primary:
+    'bg-[var(--btn-bg-primary)] text-[var(--btn-text-primary)] ' +
+    'hover:bg-[var(--btn-bg-primary-hover)]',
+  secondary:
+    'bg-gray-100 text-gray-900 hover:bg-gray-200',
+  outline:
+    'border border-gray-300 bg-white text-gray-700 hover:bg-gray-50',
+  ghost:
+    'bg-transparent text-gray-700 hover:bg-gray-100',
+  destructive:
+    'bg-red-600 text-white hover:bg-red-700',
+};
+
+// Size classes (md reuses token variables directly)
+const sizeClass: Record<Size, string> = {
+  sm: 'px-3 py-1 text-xs',
+  md: 'px-[var(--btn-padding-x)] py-[var(--btn-padding-y)] text-sm',
+  lg: 'px-6 py-3 text-base',
+};
+
+export function Button({
+  variant = 'primary',
+  size    = 'md',
+  className,
+  children,
+  ...props
+}: ButtonProps) {
+  return (
+    <button
+      className={cn(base, variantClass[variant], sizeClass[size], className)}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+}`,
   },
   badge: {
     name: "Badge",
     description:
       "A small label used to highlight status, category, or count information alongside other elements.",
     slug: "badge",
+    status: "stable",
     states: [
       {
         state: "Default",
         description: "Standard badge with label text. Neutral styling.",
         preview: "default",
-        code: `<span
-  className="inline-flex items-center rounded-full
-    px-2.5 py-0.5 text-xs font-medium
-    bg-gray-100 text-gray-700"
->
+        code: `<span className="
+  bg-[var(--badge-bg-default)] text-[var(--badge-text-default)]
+  rounded-[var(--badge-radius)]
+  px-[var(--badge-px)] py-[var(--badge-py)]
+  text-xs font-medium
+  inline-flex items-center
+">
   Badge
 </span>`,
       },
       {
         state: "Hover",
-        description:
-          "Hover state when badge is interactive (clickable/filterable).",
+        description: "Hover state when badge is interactive (clickable/filterable).",
         preview: "hover",
-        code: `<span
-  className="inline-flex items-center rounded-full
-    px-2.5 py-0.5 text-xs font-medium cursor-pointer
-    bg-gray-100 text-gray-700
-    hover:bg-gray-200 transition-colors"
->
-  Badge
-</span>`,
+        code: `{/* Add to badge className when interactive: */}
+hover:bg-gray-200 cursor-pointer`,
       },
       {
         state: "Active",
-        description:
-          "Selected/active filter badge. Terracotta fill indicates selection.",
+        description: "Selected/active filter badge. Terracotta fill indicates selection.",
         preview: "active",
-        code: `<span
-  className="inline-flex items-center rounded-full
-    px-2.5 py-0.5 text-xs font-medium
-    bg-terracotta-600 text-white"
->
-  Active
-</span>`,
+        code: `{/* Replace colour classes with: */}
+bg-[var(--btn-bg-primary)] text-[var(--btn-text-primary)]`,
       },
       {
         state: "Disabled",
         description: "Non-interactive badge in a disabled context.",
         preview: "disabled",
-        code: `<span
-  className="inline-flex items-center rounded-full
-    px-2.5 py-0.5 text-xs font-medium
-    bg-gray-100 text-gray-400 opacity-50"
->
-  Disabled
-</span>`,
+        code: `{/* Add to badge className: */}
+opacity-50 pointer-events-none`,
       },
     ],
     types: [
@@ -333,37 +401,31 @@ export const componentDocs: Record<string, ComponentDoc> = {
         variant: "Default",
         description: "Neutral badge for general categorization.",
         preview: "default",
-        code: `<Badge>Default</Badge>
-// className: bg-gray-100 text-gray-700`,
+        code: `<span className="bg-[var(--badge-bg-default)] text-[var(--badge-text-default)] rounded-[var(--badge-radius)] px-[var(--badge-px)] py-[var(--badge-py)] text-xs font-medium">Default</span>`,
       },
       {
         variant: "Brand",
-        description:
-          "Terracotta brand highlight for featured or primary categories.",
+        description: "Terracotta brand highlight for featured or primary categories.",
         preview: "brand",
-        code: `<Badge variant="brand">Brand</Badge>
-// className: bg-terracotta-200 text-terracotta-700`,
+        code: `<span className="bg-[var(--badge-bg-brand)] text-[var(--badge-text-brand)] rounded-[var(--badge-radius)] px-[var(--badge-px)] py-[var(--badge-py)] text-xs font-medium">Brand</span>`,
       },
       {
         variant: "Success",
         description: "Positive status — completed, active, approved.",
         preview: "success",
-        code: `<Badge variant="success">Success</Badge>
-// className: bg-green-100 text-green-700`,
+        code: `<span className="bg-green-100 text-green-700 rounded-[var(--badge-radius)] px-[var(--badge-px)] py-[var(--badge-py)] text-xs font-medium">Success</span>`,
       },
       {
         variant: "Warning",
         description: "Caution state — pending, in review, expiring soon.",
         preview: "warning",
-        code: `<Badge variant="warning">Warning</Badge>
-// className: bg-amber-100 text-amber-700`,
+        code: `<span className="bg-amber-100 text-amber-700 rounded-[var(--badge-radius)] px-[var(--badge-px)] py-[var(--badge-py)] text-xs font-medium">Warning</span>`,
       },
       {
         variant: "Destructive",
         description: "Error or danger state — failed, rejected, critical.",
         preview: "destructive",
-        code: `<Badge variant="destructive">Error</Badge>
-// className: bg-red-100 text-red-700`,
+        code: `<span className="bg-red-100 text-red-700 rounded-[var(--badge-radius)] px-[var(--badge-px)] py-[var(--badge-py)] text-xs font-medium">Destructive</span>`,
       },
     ],
     tokens: [
@@ -422,82 +484,135 @@ export const componentDocs: Record<string, ComponentDoc> = {
         category: "Color",
       },
     ],
+    props: [
+      { name: 'variant', type: "'default' | 'brand' | 'success' | 'warning' | 'destructive'", default: "'default'", required: false, description: 'Visual style of the badge' },
+      { name: 'children', type: 'React.ReactNode', default: '—', required: true, description: 'Badge label text' },
+      { name: 'className', type: 'string', default: '—', required: false, description: 'Additional CSS classes' },
+    ],
+    propSchema: {
+      variant: { type: 'select', options: ['default', 'brand', 'success', 'warning', 'destructive'], default: 'default' },
+      state:   { type: 'select', options: ['default', 'hover', 'active', 'disabled'], default: 'default' },
+      label:   { type: 'string', default: 'Badge' },
+    },
+    fullCode: `// Badge.tsx — complete Tailwind + token implementation
+import { cn } from '@/lib/utils';
+
+type Variant = 'default' | 'brand' | 'success' | 'warning' | 'destructive';
+
+interface BadgeProps {
+  variant?:    Variant;
+  interactive?: boolean;   // adds hover + cursor styles
+  disabled?:   boolean;
+  children:    React.ReactNode;
+  className?:  string;
+}
+
+// Base classes — token variables for shape & spacing
+const base =
+  'inline-flex items-center ' +
+  'rounded-[var(--badge-radius)] ' +
+  'px-[var(--badge-px)] py-[var(--badge-py)] ' +
+  'text-xs font-medium';
+
+// Colour classes — brand variants reference design tokens
+const variantClass: Record<Variant, string> = {
+  default:     'bg-[var(--badge-bg-default)] text-[var(--badge-text-default)]',
+  brand:       'bg-[var(--badge-bg-brand)]   text-[var(--badge-text-brand)]',
+  success:     'bg-green-100 text-green-700',
+  warning:     'bg-amber-100 text-amber-700',
+  destructive: 'bg-red-100   text-red-700',
+};
+
+export function Badge({
+  variant     = 'default',
+  interactive = false,
+  disabled    = false,
+  children,
+  className,
+}: BadgeProps) {
+  return (
+    <span
+      className={cn(
+        base,
+        variantClass[variant],
+        interactive && 'hover:bg-gray-200 cursor-pointer',
+        // active/selected state: swap to brand fill
+        // aria-selected="true" → 'bg-[var(--btn-bg-primary)] text-[var(--btn-text-primary)]'
+        disabled && 'opacity-50 pointer-events-none',
+        className,
+      )}
+    >
+      {children}
+    </span>
+  );
+}`,
   },
   input: {
     name: "Input",
     description:
       "A text field that allows users to enter and edit single-line text values.",
     slug: "input",
+    status: "stable",
     states: [
       {
         state: "Default",
-        description:
-          "Empty input, ready for entry. Subtle border on white background.",
+        description: "Empty input, ready for entry. Subtle border on white background.",
         preview: "default",
-        code: `<input
-  type="text"
-  placeholder="Enter text..."
-  className="w-full rounded-md border border-gray-300
-    bg-white px-3 py-2 text-sm text-gray-900
-    placeholder:text-gray-400
-    focus:outline-none
-    transition-colors"
-/>`,
+        code: `<input className="
+  w-full bg-[var(--input-bg)] text-[var(--input-text)]
+  border border-[var(--input-border)] rounded-[var(--input-radius)]
+  px-[var(--input-px)] py-[var(--input-py)] text-sm
+  placeholder:text-[var(--input-placeholder)]
+  transition-colors
+" placeholder="Enter text..." />`,
       },
       {
         state: "Focus",
-        description:
-          "Active input receiving keyboard input. Terracotta ring for brand consistency.",
+        description: "Active input receiving keyboard input. Terracotta ring for brand consistency.",
         preview: "focus",
-        code: `<input
-  type="text"
-  className="w-full rounded-md border border-terracotta-600
-    bg-white px-3 py-2 text-sm text-gray-900
-    ring-2 ring-terracotta-600 ring-offset-0
-    focus:outline-none"
-/>`,
+        code: `{/* Add to input className: */}
+focus:border-[var(--input-border-focus)]
+focus:outline-none
+focus:ring-2
+focus:ring-[var(--input-border-focus)]`,
       },
       {
         state: "Filled",
         description: "Input with user-entered content.",
         preview: "filled",
-        code: `<input
-  type="text"
-  value="John Doe"
-  className="w-full rounded-md border border-gray-300
-    bg-white px-3 py-2 text-sm text-gray-900
-    focus:outline-none focus:ring-2
-    focus:ring-terracotta-600"
-/>`,
+        code: `{/* Same base classes — value attribute drives the filled appearance */}
+<input className="
+  w-full bg-[var(--input-bg)] text-[var(--input-text)]
+  border border-[var(--input-border)] rounded-[var(--input-radius)]
+  px-[var(--input-px)] py-[var(--input-py)] text-sm
+" defaultValue="Filled value" />`,
       },
       {
         state: "Error",
-        description:
-          "Validation failed. Red border and helper text indicate the issue.",
+        description: "Validation failed. Red border and helper text indicate the issue.",
         preview: "error",
-        code: `<div className="space-y-1">
-  <input
-    type="text"
-    className="w-full rounded-md border border-red-500
-      bg-white px-3 py-2 text-sm text-gray-900
-      focus:outline-none focus:ring-2 focus:ring-red-500"
-  />
-  <p className="text-xs text-red-600">This field is required.</p>
+        code: `<div className="flex flex-col gap-1">
+  <input className="
+    w-full bg-[var(--input-bg)] text-[var(--input-text)]
+    border border-[var(--input-border-error)] rounded-[var(--input-radius)]
+    px-[var(--input-px)] py-[var(--input-py)] text-sm
+    focus:outline-none focus:ring-2 focus:ring-[var(--input-border-error)]
+  " />
+  <p className="text-xs text-[var(--input-border-error)]">
+    This field is required.
+  </p>
 </div>`,
       },
       {
         state: "Disabled",
-        description:
-          "Non-interactive. Grayed background signals unavailability.",
+        description: "Non-interactive. Grayed background signals unavailability.",
         preview: "disabled",
-        code: `<input
-  disabled
-  type="text"
-  placeholder="Disabled"
-  className="w-full rounded-md border border-gray-200
-    bg-gray-100 px-3 py-2 text-sm text-gray-400
-    cursor-not-allowed opacity-60"
-/>`,
+        code: `<input className="
+  w-full bg-[var(--input-bg-disabled)] text-gray-400
+  border border-[var(--input-border)] rounded-[var(--input-radius)]
+  px-[var(--input-px)] py-[var(--input-py)] text-sm
+  cursor-not-allowed opacity-60
+" disabled />`,
       },
     ],
     types: [
@@ -505,17 +620,39 @@ export const componentDocs: Record<string, ComponentDoc> = {
         variant: "Default",
         description: "Standard single-line text input.",
         preview: "default",
-        code: `<Input type="text" placeholder="Enter text..." />`,
+        code: `<input
+  type="text"
+  placeholder="Enter text..."
+  className="
+    w-full bg-[var(--input-bg)] text-[var(--input-text)]
+    border border-[var(--input-border)] rounded-[var(--input-radius)]
+    px-[var(--input-px)] py-[var(--input-py)] text-sm
+    placeholder:text-[var(--input-placeholder)]
+    focus:outline-none focus:ring-2 focus:ring-[var(--input-border-focus)]
+    focus:border-[var(--input-border-focus)] transition-colors
+  "
+/>`,
       },
       {
         variant: "With Label",
         description: "Input paired with a descriptive label above.",
         preview: "labeled",
-        code: `<div className="space-y-1.5">
+        code: `<div className="flex flex-col gap-1.5">
   <label className="text-sm font-medium text-gray-700">
     Email address
   </label>
-  <Input type="email" placeholder="you@example.com" />
+  <input
+    type="email"
+    placeholder="you@example.com"
+    className="
+      w-full bg-[var(--input-bg)] text-[var(--input-text)]
+      border border-[var(--input-border)] rounded-[var(--input-radius)]
+      px-[var(--input-px)] py-[var(--input-py)] text-sm
+      placeholder:text-[var(--input-placeholder)]
+      focus:outline-none focus:ring-2 focus:ring-[var(--input-border-focus)]
+      focus:border-[var(--input-border-focus)] transition-colors
+    "
+  />
 </div>`,
       },
       {
@@ -523,12 +660,18 @@ export const componentDocs: Record<string, ComponentDoc> = {
         description: "Leading icon for context — search, email, password.",
         preview: "icon",
         code: `<div className="relative">
-  <Search className="absolute left-3 top-1/2 -translate-y-1/2
-    h-4 w-4 text-gray-400" />
-  <Input
+  <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-[var(--input-placeholder)]" />
+  <input
     type="search"
     placeholder="Search..."
-    className="pl-9"
+    className="
+      w-full bg-[var(--input-bg)] text-[var(--input-text)]
+      border border-[var(--input-border)] rounded-[var(--input-radius)]
+      pl-9 pr-[var(--input-px)] py-[var(--input-py)] text-sm
+      placeholder:text-[var(--input-placeholder)]
+      focus:outline-none focus:ring-2 focus:ring-[var(--input-border-focus)]
+      focus:border-[var(--input-border-focus)] transition-colors
+    "
   />
 </div>`,
       },
@@ -538,12 +681,15 @@ export const componentDocs: Record<string, ComponentDoc> = {
         preview: "textarea",
         code: `<textarea
   rows={4}
-  placeholder="Write your message..."
-  className="w-full rounded-md border border-gray-300
-    bg-white px-3 py-2 text-sm text-gray-900
-    placeholder:text-gray-400 resize-none
-    focus:outline-none focus:ring-2
-    focus:ring-terracotta-600 focus:border-terracotta-600"
+  placeholder="Enter a longer message..."
+  className="
+    w-full bg-[var(--input-bg)] text-[var(--input-text)]
+    border border-[var(--input-border)] rounded-[var(--input-radius)]
+    px-[var(--input-px)] py-[var(--input-py)] text-sm resize-none
+    placeholder:text-[var(--input-placeholder)]
+    focus:outline-none focus:ring-2 focus:ring-[var(--input-border-focus)]
+    focus:border-[var(--input-border-focus)] transition-colors
+  "
 />`,
       },
     ],
@@ -615,12 +761,74 @@ export const componentDocs: Record<string, ComponentDoc> = {
         category: "Typography",
       },
     ],
+    props: [
+      { name: 'type', type: "'text' | 'email' | 'password' | 'search' | 'number'", default: "'text'", required: false, description: 'HTML input type' },
+      { name: 'placeholder', type: 'string', default: '—', required: false, description: 'Placeholder text shown when empty' },
+      { name: 'disabled', type: 'boolean', default: 'false', required: false, description: 'Disables the input' },
+      { name: 'value', type: 'string', default: '—', required: false, description: 'Controlled value' },
+      { name: 'onChange', type: '(e: React.ChangeEvent<HTMLInputElement>) => void', default: '—', required: false, description: 'Change event handler' },
+      { name: 'className', type: 'string', default: '—', required: false, description: 'Additional CSS classes' },
+    ],
+    propSchema: {
+      state:       { type: 'select', options: ['default', 'focus', 'filled', 'error', 'disabled'], default: 'default' },
+      inputType:   { type: 'select', options: ['text', 'email', 'password', 'search'], default: 'text' },
+      placeholder: { type: 'string', default: 'Enter text...' },
+    },
+    fullCode: `// Input.tsx — complete Tailwind + token implementation
+import { cn } from '@/lib/utils';
+
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  hasError?: boolean;
+  label?:    string;
+}
+
+// Base classes — token variables for shape, spacing & colour
+const base =
+  'w-full bg-[var(--input-bg)] text-[var(--input-text)] ' +
+  'border border-[var(--input-border)] rounded-[var(--input-radius)] ' +
+  'px-[var(--input-px)] py-[var(--input-py)] text-sm ' +
+  'placeholder:text-[var(--input-placeholder)] ' +
+  'transition-colors ' +
+  // Focus state — brand ring
+  'focus:outline-none focus:ring-2 focus:ring-[var(--input-border-focus)] ' +
+  'focus:border-[var(--input-border-focus)] ' +
+  // Disabled state
+  'disabled:bg-[var(--input-bg-disabled)] disabled:text-gray-400 ' +
+  'disabled:cursor-not-allowed disabled:opacity-60';
+
+export function Input({ hasError, label, className, id, ...props }: InputProps) {
+  return (
+    <div className="flex flex-col gap-1.5">
+      {label && (
+        <label htmlFor={id} className="text-sm font-medium text-gray-700">
+          {label}
+        </label>
+      )}
+      <input
+        id={id}
+        className={cn(
+          base,
+          // Error state — red ring instead of brand
+          hasError && 'border-[var(--input-border-error)] focus:ring-[var(--input-border-error)] focus:border-[var(--input-border-error)]',
+          className,
+        )}
+        {...props}
+      />
+      {hasError && (
+        <p className="text-xs text-[var(--input-border-error)]">
+          This field is required.
+        </p>
+      )}
+    </div>
+  );
+}`,
   },
   colors: {
     name: "Colors",
     description:
       "The design system color palette, including brand, semantic, and neutral tokens.",
     slug: "colors",
+    status: "stable",
     states: [
       {
         state: "Brand Palette",
@@ -771,6 +979,7 @@ colors: {
     description:
       "The type scale, font weights, and line heights that define visual hierarchy across the system.",
     slug: "typography",
+    status: "stable",
     states: [
       {
         state: "Display",
@@ -908,20 +1117,19 @@ fontFamily: {
     description:
       "A contained surface that groups related content and actions into a distinct visual unit.",
     slug: "card",
+    status: "stable",
     states: [
       {
         state: "Default",
         description:
           "Static card at rest. White surface with subtle border and shadow.",
         preview: "default",
-        code: `<div className="rounded-lg border border-gray-200
-  bg-white p-6 shadow-sm">
-  <h3 className="text-base font-semibold text-gray-900">
-    Card Title
-  </h3>
-  <p className="mt-1 text-sm text-gray-500">
-    Supporting description text.
-  </p>
+        code: `<div className="
+  bg-[var(--card-bg)] border border-[var(--card-border)]
+  rounded-[var(--card-radius)] shadow-[var(--card-shadow)]
+  p-[var(--card-padding)]
+">
+  Card content
 </div>`,
       },
       {
@@ -929,31 +1137,22 @@ fontFamily: {
         description:
           "Interactive card hover — lifted shadow indicates clickability.",
         preview: "hover",
-        code: `<div className="rounded-lg border border-gray-200
-  bg-white p-6 shadow-sm cursor-pointer
-  hover:shadow-md hover:border-gray-300
-  transition-all duration-150">
-  <h3 className="text-base font-semibold text-gray-900">
-    Card Title
-  </h3>
-  <p className="mt-1 text-sm text-gray-500">
-    Supporting description text.
-  </p>
-</div>`,
+        code: `{/* Add to base card className: */}
+hover:border-[var(--card-border-hover)]
+hover:shadow-[var(--card-shadow-hover)]
+cursor-pointer transition-all duration-150`,
       },
       {
         state: "Selected",
         description:
-          "Active/selected card — terracotta border highlights selection.",
+          "Active/selected card — brand border highlights selection.",
         preview: "selected",
-        code: `<div className="rounded-lg border-2 border-terracotta-600
-  bg-terracotta-200/30 p-6 shadow-sm">
-  <h3 className="text-base font-semibold text-gray-900">
-    Selected Card
-  </h3>
-  <p className="mt-1 text-sm text-gray-500">
-    This card is currently selected.
-  </p>
+        code: `<div className="
+  bg-[var(--card-bg)] border-2 border-[var(--card-border-selected)]
+  rounded-[var(--card-radius)] shadow-[var(--card-shadow)]
+  p-[var(--card-padding)]
+" aria-selected="true">
+  Selected card
 </div>`,
       },
     ],
@@ -962,33 +1161,37 @@ fontFamily: {
         variant: "Default",
         description: "Standard white card with border and shadow.",
         preview: "default",
-        code: `<Card>
-  <CardHeader>
-    <CardTitle>Title</CardTitle>
-    <CardDescription>Description</CardDescription>
-  </CardHeader>
-  <CardContent>Content goes here.</CardContent>
-</Card>`,
+        code: `<div className="
+  bg-[var(--card-bg)] border border-[var(--card-border)]
+  rounded-[var(--card-radius)] shadow-[var(--card-shadow)]
+  p-[var(--card-padding)]
+">
+  Default card
+</div>`,
       },
       {
         variant: "Tinted",
         description:
-          "Terracotta-tinted surface for featured or promotional content.",
+          "Brand-tinted surface for featured or promotional content.",
         preview: "tinted",
-        code: `<div className="rounded-lg bg-terracotta-200/40
-  border border-terracotta-200 p-6">
-  <h3 className="font-semibold text-terracotta-700">
-    Featured
-  </h3>
+        code: `<div className="
+  bg-terracotta-200/40 border border-terracotta-200
+  rounded-[var(--card-radius)] shadow-none
+  p-[var(--card-padding)]
+">
+  Tinted card
 </div>`,
       },
       {
         variant: "Flat",
         description: "No shadow — sits flush within gray backgrounds.",
         preview: "flat",
-        code: `<div className="rounded-lg border border-gray-200
-  bg-white p-6">
-  <h3 className="font-semibold text-gray-900">Flat Card</h3>
+        code: `<div className="
+  bg-[var(--card-bg)] border border-[var(--card-border)]
+  rounded-[var(--card-radius)] shadow-none
+  p-[var(--card-padding)]
+">
+  Flat card
 </div>`,
       },
     ],
@@ -1042,5 +1245,69 @@ fontFamily: {
         category: "Spacing",
       },
     ],
+    props: [
+      { name: 'children', type: 'React.ReactNode', default: '—', required: true, description: 'Card content' },
+      { name: 'variant', type: "'default' | 'tinted' | 'flat'", default: "'default'", required: false, description: 'Visual style of the card' },
+      { name: 'className', type: 'string', default: '—', required: false, description: 'Additional CSS classes' },
+    ],
+    propSchema: {
+      variant: { type: 'select', options: ['default', 'tinted', 'flat'], default: 'default' },
+      state:   { type: 'select', options: ['default', 'hover', 'selected'], default: 'default' },
+    },
+    fullCode: `// Card.tsx — complete Tailwind + token implementation
+import { cn } from '@/lib/utils';
+
+type CardVariant = 'default' | 'tinted' | 'flat';
+
+interface CardProps {
+  children:    React.ReactNode;
+  variant?:    CardVariant;
+  interactive?: boolean;    // enables hover lift
+  selected?:   boolean;     // brand border + subtle tint
+  className?:  string;
+}
+
+// Base classes — token variables for shape, spacing & colour
+const base =
+  'rounded-[var(--card-radius)] p-[var(--card-padding)] ' +
+  'transition-all duration-150';
+
+// Variant colour classes
+const variantClass: Record<CardVariant, string> = {
+  default: 'bg-[var(--card-bg)] border border-[var(--card-border)] shadow-[var(--card-shadow)]',
+  tinted:  'bg-terracotta-200/40 border border-terracotta-200 shadow-none',
+  flat:    'bg-[var(--card-bg)] border border-[var(--card-border)] shadow-none',
+};
+
+export function Card({
+  variant     = 'default',
+  interactive = false,
+  selected    = false,
+  children,
+  className,
+}: CardProps) {
+  return (
+    <div
+      className={cn(
+        base,
+        variantClass[variant],
+        // Interactive hover state — lifted shadow + tighter border
+        interactive && [
+          'cursor-pointer',
+          'hover:border-[var(--card-border-hover)]',
+          'hover:shadow-[var(--card-shadow-hover)]',
+        ],
+        // Selected state — brand border overrides variant border
+        selected && [
+          'border-2 border-[var(--card-border-selected)]',
+          'bg-terracotta-200/20',
+        ],
+        className,
+      )}
+    >
+      {children}
+    </div>
+  );
+}`,
   },
 };

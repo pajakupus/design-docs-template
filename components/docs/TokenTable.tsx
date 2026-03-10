@@ -1,15 +1,62 @@
+"use client";
+
+import { useState } from "react";
 import { DesignToken } from "@/lib/docs-data";
+import { toCssVariables, toJsObject, toTailwindConfig } from "@/lib/token-export";
+import CodeBlock from "./CodeBlock";
 
 interface TokenTableProps {
   tokens: DesignToken[];
 }
 
+type ExportFormat = "css" | "js" | "tailwind";
+
+const formatLabels: Record<ExportFormat, string> = {
+  css: "CSS Variables",
+  js: "JS Object",
+  tailwind: "Tailwind Config",
+};
+
 export default function TokenTable({ tokens }: TokenTableProps) {
+  const [format, setFormat] = useState<ExportFormat | null>(null);
+
   // Group by category
   const categories = Array.from(new Set(tokens.map((t) => t.category)));
 
+  const exportCode =
+    format === "css" ? toCssVariables(tokens) :
+    format === "js" ? toJsObject(tokens) :
+    format === "tailwind" ? toTailwindConfig(tokens) : null;
+
+  const language = format === "css" ? "css" : format === "js" ? "ts" : "ts";
+
   return (
     <div className="space-y-6">
+      {/* Export format selector */}
+      <div className="flex items-center gap-2">
+        <span className="text-xs text-gray-500 font-medium">Export as:</span>
+        {(["css", "js", "tailwind"] as ExportFormat[]).map((f) => (
+          <button
+            key={f}
+            type="button"
+            onClick={() => setFormat(format === f ? null : f)}
+            className={`px-3 py-1.5 rounded-md text-xs font-medium border transition-colors ${
+              format === f
+                ? "bg-terracotta-600 text-white border-terracotta-600"
+                : "bg-white text-gray-600 border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+            }`}
+          >
+            {formatLabels[f]}
+          </button>
+        ))}
+      </div>
+
+      {/* Export code block */}
+      {exportCode && (
+        <CodeBlock code={exportCode} language={language} />
+      )}
+
+      {/* Token table grouped by category */}
       {categories.map((category) => {
         const categoryTokens = tokens.filter((t) => t.category === category);
         return (
@@ -47,7 +94,6 @@ export default function TokenTable({ tokens }: TokenTableProps) {
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2">
-                          {/* Color swatch if value looks like a hex color */}
                           {/^#[0-9A-Fa-f]{3,8}$/.test(token.value) && (
                             <span
                               className="inline-block w-4 h-4 rounded-sm border border-gray-200 flex-shrink-0"

@@ -32,7 +32,9 @@
       "Bash(cmd:*)",
       "Bash(git filter-repo:*)",
       "Bash(python3:*)",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Bash(npx tsc:*)",
+      "Bash(cd \"C:\\\\Things\\\\PROJEKTI\\\\claude-design-system\\\\design-docs-template\" && npx next build 2>&1 | tail -20)"
     ]
   }
 }

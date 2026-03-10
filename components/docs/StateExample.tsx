@@ -5,13 +5,20 @@ import ComponentPreview from "./ComponentPreview";
 interface StateExampleProps {
   example: StateExampleType;
   componentSlug: string;
+  isDark?: boolean;
+  viewportWidth?: number | null;
 }
 
-export default function StateExample({ example, componentSlug }: StateExampleProps) {
+export default function StateExample({ example, componentSlug, isDark = false, viewportWidth = null }: StateExampleProps) {
   return (
     <div className="rounded-xl border border-gray-200 bg-white overflow-hidden shadow-sm">
-      {/* Preview area */}
-      <div className="px-8 py-10 bg-gray-50 border-b border-gray-200 flex items-center justify-center min-h-[120px]">
+      {/* Preview area — constrained by viewport width if set */}
+      <div
+        className={`px-8 py-10 border-b border-gray-200 flex items-center justify-center min-h-[120px] transition-colors ${
+          isDark ? "dark bg-gray-900" : "bg-gray-50"
+        }`}
+        style={viewportWidth ? { maxWidth: viewportWidth, margin: "0 auto" } : undefined}
+      >
         <ComponentPreview componentSlug={componentSlug} variant={example.preview} />
       </div>
 
