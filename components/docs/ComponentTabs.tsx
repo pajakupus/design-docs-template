@@ -54,7 +54,7 @@ export default function ComponentTabs({ doc }: ComponentTabsProps) {
                 className={cn(
                   "inline-flex items-center justify-center rounded-full w-5 h-5 text-xs transition-colors",
                   "bg-gray-100 text-gray-500",
-                  "group-data-[state=active]:bg-terracotta-200 group-data-[state=active]:text-terracotta-700"
+                  "group-data-[state=active]:bg-brand-200 group-data-[state=active]:text-brand-700"
                 )}
               >
                 {tab.count}
@@ -64,7 +64,7 @@ export default function ComponentTabs({ doc }: ComponentTabsProps) {
             <span
               className={cn(
                 "absolute bottom-0 left-0 right-0 h-0.5 rounded-full transition-colors",
-                "group-data-[state=active]:bg-terracotta-600"
+                "group-data-[state=active]:bg-brand-600"
               )}
             />
           </Tabs.Trigger>

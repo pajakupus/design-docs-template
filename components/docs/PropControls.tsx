@@ -55,7 +55,7 @@ function FieldControl({ field, value, onChange }: FieldControlProps) {
               onClick={() => onChange(opt)}
               className={`px-2.5 py-1 text-xs rounded-md font-medium transition-colors ${
                 active
-                  ? "bg-terracotta-600 text-white shadow-sm"
+                  ? "bg-brand-600 text-white shadow-sm"
                   : "bg-gray-100 text-gray-600 hover:bg-gray-200"
               }`}
             >
@@ -75,8 +75,8 @@ function FieldControl({ field, value, onChange }: FieldControlProps) {
         role="switch"
         aria-checked={checked}
         onClick={() => onChange(!checked)}
-        className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-terracotta-600 focus:ring-offset-1 ${
-          checked ? "bg-terracotta-600" : "bg-gray-200"
+        className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-brand-600 focus:ring-offset-1 ${
+          checked ? "bg-brand-600" : "bg-gray-200"
         }`}
       >
         <span
@@ -94,7 +94,7 @@ function FieldControl({ field, value, onChange }: FieldControlProps) {
         type="text"
         value={value as string}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-md border border-gray-300 bg-white px-2.5 py-1.5 text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-terracotta-600 focus:border-terracotta-600"
+        className="w-full rounded-md border border-gray-300 bg-white px-2.5 py-1.5 text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-brand-600"
       />
     );
   }
@@ -108,7 +108,7 @@ function FieldControl({ field, value, onChange }: FieldControlProps) {
           max={field.max ?? 100}
           value={value as number}
           onChange={(e) => onChange(Number(e.target.value))}
-          className="flex-1 accent-terracotta-600"
+          className="flex-1 accent-brand-600"
         />
         <span className="w-8 text-right text-xs font-mono text-gray-600">
           {value as number}

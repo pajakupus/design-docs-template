@@ -10,11 +10,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        terracotta: {
-          200: "#F3D9CF",
-          400: "#D99A7D",
-          600: "#C67C4E",
-          700: "#A8623A",
+        brand: {
+          50:  "#EFF6FF",
+          100: "#DBEAFE",
+          200: "#BFDBFE",
+          400: "#60A5FA",
+          600: "#2563EB",
+          700: "#1D4ED8",
         },
       },
       fontFamily: {

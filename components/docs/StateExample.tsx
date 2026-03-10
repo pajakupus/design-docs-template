@@ -26,7 +26,7 @@ export default function StateExample({ example, componentSlug, isDark = false, v
       <div className="p-5 space-y-3">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-terracotta-200 text-terracotta-700">
+            <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-brand-200 text-brand-700">
               {example.state}
             </span>
           </div>

@@ -105,8 +105,8 @@ export default function Playground({ doc }: PlaygroundProps) {
             role="switch"
             aria-checked={realWorld}
             onClick={() => setRealWorld(!realWorld)}
-            className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-terracotta-600 focus:ring-offset-1 ${
-              realWorld ? "bg-terracotta-600" : "bg-gray-200"
+            className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-brand-600 focus:ring-offset-1 ${
+              realWorld ? "bg-brand-600" : "bg-gray-200"
             }`}
           >
             <span
@@ -119,7 +119,7 @@ export default function Playground({ doc }: PlaygroundProps) {
             Real World
           </span>
           {realWorld && (
-            <span className="text-[10px] text-terracotta-600 bg-terracotta-50 px-1.5 py-0.5 rounded font-medium">
+            <span className="text-[10px] text-brand-600 bg-brand-50 px-1.5 py-0.5 rounded font-medium">
               Interactive
             </span>
           )}

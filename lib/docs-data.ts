@@ -127,7 +127,7 @@ export const componentDocs: Record<string, ComponentDoc> = {
       },
       {
         state: "Hover",
-        description: "Pointer hover feedback. Darkens background to terracotta-700.",
+        description: "Pointer hover feedback. Darkens background to brand-700.",
         preview: "hover",
         code: `{/* Add to base button className: */}
 hover:bg-[var(--btn-bg-primary-hover)]`,
@@ -216,13 +216,13 @@ disabled:pointer-events-none`,
     tokens: [
       {
         name: "--btn-bg-primary",
-        value: "#C67C4E",
+        value: "#2563EB",
         usage: "Primary button background",
         category: "Color",
       },
       {
         name: "--btn-bg-primary-hover",
-        value: "#A8623A",
+        value: "#1D4ED8",
         usage: "Primary button hover state",
         category: "Color",
       },
@@ -270,7 +270,7 @@ disabled:pointer-events-none`,
       },
       {
         name: "--btn-focus-ring",
-        value: "2px solid #C67C4E",
+        value: "2px solid #2563EB",
         usage: "Keyboard focus ring",
         category: "Accessibility",
       },
@@ -383,7 +383,7 @@ hover:bg-gray-200 cursor-pointer`,
       },
       {
         state: "Active",
-        description: "Selected/active filter badge. Terracotta fill indicates selection.",
+        description: "Selected/active filter badge. Brand blue fill indicates selection.",
         preview: "active",
         code: `{/* Replace colour classes with: */}
 bg-[var(--btn-bg-primary)] text-[var(--btn-text-primary)]`,
@@ -405,7 +405,7 @@ opacity-50 pointer-events-none`,
       },
       {
         variant: "Brand",
-        description: "Terracotta brand highlight for featured or primary categories.",
+        description: "Brand blue brand highlight for featured or primary categories.",
         preview: "brand",
         code: `<span className="bg-[var(--badge-bg-brand)] text-[var(--badge-text-brand)] rounded-[var(--badge-radius)] px-[var(--badge-px)] py-[var(--badge-py)] text-xs font-medium">Brand</span>`,
       },
@@ -473,13 +473,13 @@ opacity-50 pointer-events-none`,
       },
       {
         name: "--badge-bg-brand",
-        value: "#F3D9CF",
+        value: "#DBEAFE",
         usage: "Brand badge background",
         category: "Color",
       },
       {
         name: "--badge-text-brand",
-        value: "#A8623A",
+        value: "#1D4ED8",
         usage: "Brand badge text",
         category: "Color",
       },
@@ -568,7 +568,7 @@ export function Badge({
       },
       {
         state: "Focus",
-        description: "Active input receiving keyboard input. Terracotta ring for brand consistency.",
+        description: "Active input receiving keyboard input. Brand blue ring for brand consistency.",
         preview: "focus",
         code: `{/* Add to input className: */}
 focus:border-[var(--input-border-focus)]
@@ -714,7 +714,7 @@ focus:ring-[var(--input-border-focus)]`,
       },
       {
         name: "--input-border-focus",
-        value: "#C67C4E",
+        value: "#2563EB",
         usage: "Focus border color",
         category: "Color",
       },
@@ -833,21 +833,21 @@ export function Input({ hasError, label, className, id, ...props }: InputProps) 
       {
         state: "Brand Palette",
         description:
-          "Core Terracotta brand colors used for primary actions and highlights.",
+          "Core brand blue colors used for primary actions and highlights.",
         preview: "brand",
-        code: `/* Terracotta Brand Scale */
---color-terracotta-200: #F3D9CF; /* Light backgrounds, borders */
---color-terracotta-400: #D99A7D; /* Icons, secondary elements */
---color-terracotta-600: #C67C4E; /* Primary CTAs, buttons */
---color-terracotta-700: #A8623A; /* Hover states */
+        code: `/* Brand Blue Scale */
+--color-brand-200: #BFDBFE; /* Light backgrounds, borders */
+--color-brand-400: #60A5FA; /* Icons, secondary elements */
+--color-brand-600: #2563EB; /* Primary CTAs, buttons */
+--color-brand-700: #1D4ED8; /* Hover states */
 
 /* Tailwind custom config */
 colors: {
-  terracotta: {
-    200: '#F3D9CF',
-    400: '#D99A7D',
-    600: '#C67C4E',
-    700: '#A8623A',
+  brand: {
+    200: '#BFDBFE',
+    400: '#60A5FA',
+    600: '#2563EB',
+    700: '#1D4ED8',
   }
 }`,
       },
@@ -890,18 +890,18 @@ colors: {
     types: [
       {
         variant: "Primary",
-        description: "Terracotta 600 — main CTA, interactive elements.",
+        description: "Brand blue 600 — main CTA, interactive elements.",
         preview: "primary",
-        code: `className="bg-terracotta-600 text-white"
-// #C67C4E`,
+        code: `className="bg-brand-600 text-white"
+// #2563EB`,
       },
       {
         variant: "Secondary",
         description:
-          "Terracotta 200 — subtle highlights and tinted surfaces.",
+          "Brand blue 200 — subtle highlights and tinted surfaces.",
         preview: "secondary",
-        code: `className="bg-terracotta-200 text-terracotta-700"
-// #F3D9CF / #A8623A`,
+        code: `className="bg-brand-200 text-brand-700"
+// #DBEAFE / #1D4ED8`,
       },
       {
         variant: "Neutral",
@@ -914,19 +914,19 @@ colors: {
     tokens: [
       {
         name: "--color-brand-primary",
-        value: "#C67C4E",
+        value: "#2563EB",
         usage: "Primary brand color",
         category: "Brand",
       },
       {
         name: "--color-brand-hover",
-        value: "#A8623A",
+        value: "#1D4ED8",
         usage: "Brand hover state",
         category: "Brand",
       },
       {
         name: "--color-brand-light",
-        value: "#F3D9CF",
+        value: "#DBEAFE",
         usage: "Brand tinted background",
         category: "Brand",
       },
@@ -1016,7 +1016,7 @@ colors: {
           "Monospace for code snippets, tokens, and technical values.",
         preview: "code",
         code: `<code className="font-mono text-sm bg-gray-100
-  px-1.5 py-0.5 rounded text-terracotta-700">
+  px-1.5 py-0.5 rounded text-brand-700">
   font-mono text-sm
 </code>`,
       },
@@ -1175,7 +1175,7 @@ cursor-pointer transition-all duration-150`,
           "Brand-tinted surface for featured or promotional content.",
         preview: "tinted",
         code: `<div className="
-  bg-terracotta-200/40 border border-terracotta-200
+  bg-brand-200/40 border border-brand-200
   rounded-[var(--card-radius)] shadow-none
   p-[var(--card-padding)]
 ">
@@ -1216,7 +1216,7 @@ cursor-pointer transition-all duration-150`,
       },
       {
         name: "--card-border-selected",
-        value: "#C67C4E",
+        value: "#2563EB",
         usage: "Selected state border",
         category: "Color",
       },
@@ -1275,7 +1275,7 @@ const base =
 // Variant colour classes
 const variantClass: Record<CardVariant, string> = {
   default: 'bg-[var(--card-bg)] border border-[var(--card-border)] shadow-[var(--card-shadow)]',
-  tinted:  'bg-terracotta-200/40 border border-terracotta-200 shadow-none',
+  tinted:  'bg-brand-200/40 border border-brand-200 shadow-none',
   flat:    'bg-[var(--card-bg)] border border-[var(--card-border)] shadow-none',
 };
 
@@ -1300,7 +1300,7 @@ export function Card({
         // Selected state — brand border overrides variant border
         selected && [
           'border-2 border-[var(--card-border-selected)]',
-          'bg-terracotta-200/20',
+          'bg-brand-200/20',
         ],
         className,
       )}

@@ -145,7 +145,7 @@ function ViolationRow({ item }: { item: AxeViolation }) {
   return (
     <div className="rounded-lg border border-gray-200 p-3 space-y-1.5">
       <div className="flex items-center gap-2 flex-wrap">
-        <code className="text-xs font-mono text-terracotta-700 bg-terracotta-200/30 px-1.5 py-0.5 rounded">
+        <code className="text-xs font-mono text-brand-700 bg-brand-200/30 px-1.5 py-0.5 rounded">
           {item.id}
         </code>
         {item.impact && (

@@ -3,9 +3,9 @@
 export type TokenType = "color" | "spacing" | "radius" | "fontSize" | "fontWeight" | "shadow";
 
 export type PrimitiveToken = {
-  id: string;     // e.g. "terracotta.600"
+  id: string;     // e.g. "brand.600"
   name: string;   // display label e.g. "600"
-  value: string;  // raw CSS value e.g. "#C67C4E"
+  value: string;  // raw CSS value e.g. "#2563EB"
   type: TokenType;
 };
 
@@ -38,20 +38,20 @@ export type ComponentToken = {
 
 export const primitiveGroups: PrimitiveGroup[] = [
   {
-    id: "terracotta",
-    name: "Terracotta",
+    id: "brand",
+    name: "Brand Blue",
     type: "color",
     tokens: [
-      { id: "terracotta.50",  name: "50",  value: "#fdf5f2", type: "color" },
-      { id: "terracotta.100", name: "100", value: "#fae8df", type: "color" },
-      { id: "terracotta.200", name: "200", value: "#F3D9CF", type: "color" },
-      { id: "terracotta.300", name: "300", value: "#e8b99e", type: "color" },
-      { id: "terracotta.400", name: "400", value: "#D99A7D", type: "color" },
-      { id: "terracotta.500", name: "500", value: "#cc8760", type: "color" },
-      { id: "terracotta.600", name: "600", value: "#C67C4E", type: "color" },
-      { id: "terracotta.700", name: "700", value: "#A8623A", type: "color" },
-      { id: "terracotta.800", name: "800", value: "#8a4d2c", type: "color" },
-      { id: "terracotta.900", name: "900", value: "#6e3b21", type: "color" },
+      { id: "brand.50",  name: "50",  value: "#EFF6FF", type: "color" },
+      { id: "brand.100", name: "100", value: "#DBEAFE", type: "color" },
+      { id: "brand.200", name: "200", value: "#BFDBFE", type: "color" },
+      { id: "brand.300", name: "300", value: "#93C5FD", type: "color" },
+      { id: "brand.400", name: "400", value: "#60A5FA", type: "color" },
+      { id: "brand.500", name: "500", value: "#3B82F6", type: "color" },
+      { id: "brand.600", name: "600", value: "#2563EB", type: "color" },
+      { id: "brand.700", name: "700", value: "#1D4ED8", type: "color" },
+      { id: "brand.800", name: "800", value: "#1E40AF", type: "color" },
+      { id: "brand.900", name: "900", value: "#1E3A8A", type: "color" },
     ],
   },
   {
@@ -181,9 +181,9 @@ export const semanticTokens: SemanticToken[] = [
   { id: "color.bg.card",         name: "color.bg.card",         value: "#ffffff", primitiveRef: "neutral.0",        category: "Background", description: "Card and surface background" },
   { id: "color.bg.elevated",     name: "color.bg.elevated",     value: "#ffffff", primitiveRef: "neutral.0",        category: "Background", description: "Elevated surfaces, popovers" },
   { id: "color.bg.overlay",      name: "color.bg.overlay",      value: "#f9fafb", primitiveRef: "neutral.50",       category: "Background", description: "Subtle overlay, hover tints" },
-  { id: "color.bg.brand",        name: "color.bg.brand",        value: "#C67C4E", primitiveRef: "terracotta.600",   category: "Background", description: "Primary brand fill" },
-  { id: "color.bg.brand-hover",  name: "color.bg.brand-hover",  value: "#A8623A", primitiveRef: "terracotta.700",   category: "Background", description: "Brand fill on hover" },
-  { id: "color.bg.brand-subtle", name: "color.bg.brand-subtle", value: "#F3D9CF", primitiveRef: "terracotta.200",   category: "Background", description: "Tinted brand background" },
+  { id: "color.bg.brand",        name: "color.bg.brand",        value: "#2563EB", primitiveRef: "brand.600",   category: "Background", description: "Primary brand fill" },
+  { id: "color.bg.brand-hover",  name: "color.bg.brand-hover",  value: "#1D4ED8", primitiveRef: "brand.700",   category: "Background", description: "Brand fill on hover" },
+  { id: "color.bg.brand-subtle", name: "color.bg.brand-subtle", value: "#DBEAFE", primitiveRef: "brand.100",   category: "Background", description: "Tinted brand background" },
   { id: "color.bg.muted",        name: "color.bg.muted",        value: "#f3f4f6", primitiveRef: "neutral.100",      category: "Background", description: "Muted / inactive fill" },
   { id: "color.bg.danger",       name: "color.bg.danger",       value: "#fee2e2", primitiveRef: "red.100",          category: "Background", description: "Error state background" },
   { id: "color.bg.success",      name: "color.bg.success",      value: "#dcfce7", primitiveRef: "green.100",        category: "Background", description: "Success state background" },
@@ -195,7 +195,7 @@ export const semanticTokens: SemanticToken[] = [
   { id: "color.text.secondary",  name: "color.text.secondary",  value: "#6b7280", primitiveRef: "neutral.500",      category: "Text", description: "Supporting / secondary text" },
   { id: "color.text.muted",      name: "color.text.muted",      value: "#9ca3af", primitiveRef: "neutral.400",      category: "Text", description: "Placeholder and hint text" },
   { id: "color.text.inverse",    name: "color.text.inverse",    value: "#ffffff", primitiveRef: "neutral.0",        category: "Text", description: "Text on dark/brand surfaces" },
-  { id: "color.text.brand",      name: "color.text.brand",      value: "#C67C4E", primitiveRef: "terracotta.600",   category: "Text", description: "Brand-colored text and links" },
+  { id: "color.text.brand",      name: "color.text.brand",      value: "#2563EB", primitiveRef: "brand.600",   category: "Text", description: "Brand-colored text and links" },
   { id: "color.text.danger",     name: "color.text.danger",     value: "#b91c1c", primitiveRef: "red.700",          category: "Text", description: "Error and destructive text" },
   { id: "color.text.success",    name: "color.text.success",    value: "#15803d", primitiveRef: "green.700",        category: "Text", description: "Success state text" },
   { id: "color.text.warning",    name: "color.text.warning",    value: "#a16207", primitiveRef: "amber.700",        category: "Text", description: "Warning state text" },
@@ -204,7 +204,7 @@ export const semanticTokens: SemanticToken[] = [
   { id: "color.border.default",  name: "color.border.default",  value: "#d1d5db", primitiveRef: "neutral.300",      category: "Border", description: "Default border color" },
   { id: "color.border.subtle",   name: "color.border.subtle",   value: "#e5e7eb", primitiveRef: "neutral.200",      category: "Border", description: "Subtle divider border" },
   { id: "color.border.strong",   name: "color.border.strong",   value: "#9ca3af", primitiveRef: "neutral.400",      category: "Border", description: "Strong / emphasis border" },
-  { id: "color.border.focus",    name: "color.border.focus",    value: "#C67C4E", primitiveRef: "terracotta.600",   category: "Border", description: "Keyboard focus ring" },
+  { id: "color.border.focus",    name: "color.border.focus",    value: "#2563EB", primitiveRef: "brand.600",   category: "Border", description: "Keyboard focus ring" },
   { id: "color.border.danger",   name: "color.border.danger",   value: "#ef4444", primitiveRef: "red.500",          category: "Border", description: "Error / danger border" },
 
   // Space
@@ -230,29 +230,29 @@ export const semanticTokens: SemanticToken[] = [
 
 export const componentTokens: ComponentToken[] = [
   // ── Button ──
-  { id: "button.bg.default",  name: "button.bg.default",  value: "#C67C4E", semanticRef: "color.bg.brand",        component: "button", description: "Default background" },
-  { id: "button.bg.hover",    name: "button.bg.hover",    value: "#A8623A", semanticRef: "color.bg.brand-hover",  component: "button", description: "Hover background" },
+  { id: "button.bg.default",  name: "button.bg.default",  value: "#2563EB", semanticRef: "color.bg.brand",        component: "button", description: "Default background" },
+  { id: "button.bg.hover",    name: "button.bg.hover",    value: "#1D4ED8", semanticRef: "color.bg.brand-hover",  component: "button", description: "Hover background" },
   { id: "button.bg.muted",    name: "button.bg.muted",    value: "#f3f4f6", semanticRef: "color.bg.muted",        component: "button", description: "Secondary/ghost background" },
   { id: "button.text.label",  name: "button.text.label",  value: "#ffffff", semanticRef: "color.text.inverse",    component: "button", description: "Primary button label" },
   { id: "button.text.muted",  name: "button.text.muted",  value: "#9ca3af", semanticRef: "color.text.muted",      component: "button", description: "Disabled label color" },
-  { id: "button.border.focus",name: "button.border.focus",value: "#C67C4E", semanticRef: "color.border.focus",    component: "button", description: "Keyboard focus ring" },
+  { id: "button.border.focus",name: "button.border.focus",value: "#2563EB", semanticRef: "color.border.focus",    component: "button", description: "Keyboard focus ring" },
   { id: "button.radius",      name: "button.radius",      value: "6px",     semanticRef: "radius.md",             component: "button", description: "Border radius" },
   { id: "button.padding.x",   name: "button.padding.x",   value: "16px",    semanticRef: "space.md",              component: "button", description: "Horizontal padding" },
   { id: "button.padding.y",   name: "button.padding.y",   value: "8px",     semanticRef: "space.xs",              component: "button", description: "Vertical padding" },
 
   // ── Badge ──
   { id: "badge.bg.default",  name: "badge.bg.default",  value: "#f3f4f6", semanticRef: "color.bg.muted",        component: "badge", description: "Default background" },
-  { id: "badge.bg.brand",    name: "badge.bg.brand",    value: "#F3D9CF", semanticRef: "color.bg.brand-subtle", component: "badge", description: "Brand tinted background" },
+  { id: "badge.bg.brand",    name: "badge.bg.brand",    value: "#DBEAFE", semanticRef: "color.bg.brand-subtle", component: "badge", description: "Brand tinted background" },
   { id: "badge.bg.danger",   name: "badge.bg.danger",   value: "#fee2e2", semanticRef: "color.bg.danger",       component: "badge", description: "Error state background" },
   { id: "badge.text.default",name: "badge.text.default",value: "#6b7280", semanticRef: "color.text.secondary",  component: "badge", description: "Default label text" },
-  { id: "badge.text.brand",  name: "badge.text.brand",  value: "#C67C4E", semanticRef: "color.text.brand",      component: "badge", description: "Brand label text" },
+  { id: "badge.text.brand",  name: "badge.text.brand",  value: "#2563EB", semanticRef: "color.text.brand",      component: "badge", description: "Brand label text" },
   { id: "badge.border",      name: "badge.border",      value: "#e5e7eb", semanticRef: "color.border.subtle",   component: "badge", description: "Badge border" },
   { id: "badge.radius",      name: "badge.radius",      value: "9999px",  semanticRef: "radius.pill",           component: "badge", description: "Pill border radius" },
 
   // ── Input ──
   { id: "input.bg",              name: "input.bg",              value: "#ffffff", semanticRef: "color.bg.card",        component: "input", description: "Input background" },
   { id: "input.border.default",  name: "input.border.default",  value: "#d1d5db", semanticRef: "color.border.default", component: "input", description: "Resting border" },
-  { id: "input.border.focus",    name: "input.border.focus",    value: "#C67C4E", semanticRef: "color.border.focus",   component: "input", description: "Focus ring color" },
+  { id: "input.border.focus",    name: "input.border.focus",    value: "#2563EB", semanticRef: "color.border.focus",   component: "input", description: "Focus ring color" },
   { id: "input.border.error",    name: "input.border.error",    value: "#ef4444", semanticRef: "color.border.danger",  component: "input", description: "Validation error border" },
   { id: "input.text",            name: "input.text",            value: "#111827", semanticRef: "color.text.primary",   component: "input", description: "Input text color" },
   { id: "input.placeholder",     name: "input.placeholder",     value: "#9ca3af", semanticRef: "color.text.muted",     component: "input", description: "Placeholder text" },
@@ -262,7 +262,7 @@ export const componentTokens: ComponentToken[] = [
   // ── Card ──
   { id: "card.bg",              name: "card.bg",              value: "#ffffff", semanticRef: "color.bg.card",          component: "card", description: "Card surface" },
   { id: "card.border",          name: "card.border",          value: "#e5e7eb", semanticRef: "color.border.subtle",    component: "card", description: "Card border" },
-  { id: "card.border.selected", name: "card.border.selected", value: "#C67C4E", semanticRef: "color.bg.brand",        component: "card", description: "Selected state border" },
+  { id: "card.border.selected", name: "card.border.selected", value: "#2563EB", semanticRef: "color.bg.brand",        component: "card", description: "Selected state border" },
   { id: "card.radius",          name: "card.radius",          value: "8px",     semanticRef: "radius.lg",             component: "card", description: "Border radius" },
   { id: "card.padding",         name: "card.padding",         value: "24px",    semanticRef: "space.lg",              component: "card", description: "Inner padding" },
 
@@ -285,10 +285,10 @@ export const componentTokens: ComponentToken[] = [
   { id: "tooltip.radius",name:"tooltip.radius",value: "4px",    semanticRef: "radius.sm",           component: "tooltip", description: "Border radius" },
 
   // ── Checkbox ──
-  { id: "checkbox.bg.checked",  name: "checkbox.bg.checked",  value: "#C67C4E", semanticRef: "color.bg.brand",       component: "checkbox", description: "Checked fill" },
+  { id: "checkbox.bg.checked",  name: "checkbox.bg.checked",  value: "#2563EB", semanticRef: "color.bg.brand",       component: "checkbox", description: "Checked fill" },
   { id: "checkbox.bg.default",  name: "checkbox.bg.default",  value: "#ffffff", semanticRef: "color.bg.card",        component: "checkbox", description: "Unchecked background" },
   { id: "checkbox.border",      name: "checkbox.border",      value: "#d1d5db", semanticRef: "color.border.default", component: "checkbox", description: "Box border" },
-  { id: "checkbox.border.focus",name: "checkbox.border.focus",value: "#C67C4E", semanticRef: "color.border.focus",   component: "checkbox", description: "Focus ring" },
+  { id: "checkbox.border.focus",name: "checkbox.border.focus",value: "#2563EB", semanticRef: "color.border.focus",   component: "checkbox", description: "Focus ring" },
 ];
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────

@@ -358,7 +358,7 @@ function renderCard(variant: string, state: string) {
     borderRadius: "var(--card-radius)",
     padding: "var(--card-padding)",
     backgroundColor:
-      variant === "tinted" ? "#f3d9cf33" : "var(--card-bg)",
+      variant === "tinted" ? "#dbeafe33" : "var(--card-bg)",
     border:
       state  === "selected"  ? `2px solid var(--card-border-selected)` :
       state  === "hover"     ? `1px solid var(--card-border-hover)` :
@@ -373,7 +373,7 @@ function renderCard(variant: string, state: string) {
   };
 
   const titleColor = variant === "tinted" ? "var(--badge-text-brand)" : "#111827";
-  const bodyColor  = variant === "tinted" ? "#a86249cc" : "#6b7280";
+  const bodyColor  = variant === "tinted" ? "#1d4ed8cc" : "#6b7280";
 
   return (
     <div style={baseStyle}>
@@ -382,8 +382,8 @@ function renderCard(variant: string, state: string) {
       </p>
       <p style={{ fontSize: "12px", color: bodyColor, marginTop: "4px" }}>
         {state === "hover"    ? "Hover state — elevated shadow." :
-         state === "selected" ? "Terracotta border signals selection." :
-         variant === "tinted" ? "Terracotta-tinted surface." :
+         state === "selected" ? "Brand border signals selection." :
+         variant === "tinted" ? "Brand-tinted surface." :
          "Supporting description text."}
       </p>
     </div>
@@ -415,10 +415,10 @@ function ColorsPreview({ variant }: { variant: string }) {
     return (
       <div className="flex gap-2">
         {[
-          { bg: "bg-terracotta-200", label: "200" },
-          { bg: "bg-terracotta-400", label: "400" },
-          { bg: "bg-terracotta-600", label: "600" },
-          { bg: "bg-terracotta-700", label: "700" },
+          { bg: "bg-brand-200", label: "200" },
+          { bg: "bg-brand-400", label: "400" },
+          { bg: "bg-brand-600", label: "600" },
+          { bg: "bg-brand-700", label: "700" },
         ].map((c) => (
           <div key={c.label} className="text-center">
             <div className={`w-16 h-16 rounded-lg ${c.bg} shadow-sm`} />
@@ -452,10 +452,10 @@ function ColorsPreview({ variant }: { variant: string }) {
     );
   }
   if (variant === "primary") {
-    return <div className="w-32 h-12 rounded-lg bg-terracotta-600 flex items-center justify-center"><span className="text-sm font-medium text-white">#C67C4E</span></div>;
+    return <div className="w-32 h-12 rounded-lg bg-brand-600 flex items-center justify-center"><span className="text-sm font-medium text-white">#2563EB</span></div>;
   }
   if (variant === "secondary") {
-    return <div className="w-32 h-12 rounded-lg bg-terracotta-200 border border-terracotta-400/30 flex items-center justify-center"><span className="text-sm font-medium text-terracotta-700">#F3D9CF</span></div>;
+    return <div className="w-32 h-12 rounded-lg bg-brand-200 border border-brand-400/30 flex items-center justify-center"><span className="text-sm font-medium text-brand-700">#BFDBFE</span></div>;
   }
   return (
     <div className="flex gap-2">
@@ -474,7 +474,7 @@ function TypographyPreview({ variant }: { variant: string }) {
   if (variant === "display")  return <h1 className="text-4xl font-bold tracking-tight text-gray-900">Display</h1>;
   if (variant === "heading")  return <div className="space-y-1"><h2 className="text-2xl font-semibold text-gray-900">Section Heading</h2><h3 className="text-xl font-semibold text-gray-700">Sub Heading</h3><h4 className="text-lg font-medium text-gray-600">Card Heading</h4></div>;
   if (variant === "body")     return <div className="space-y-2 max-w-xs"><p className="text-base text-gray-700 leading-relaxed">Body Regular — Primary reading size.</p><p className="text-sm text-gray-500 leading-relaxed">Body Small — Secondary information.</p></div>;
-  if (variant === "code")     return <code className="font-mono text-sm bg-gray-100 px-2 py-1 rounded text-terracotta-700">font-mono text-sm</code>;
+  if (variant === "code")     return <code className="font-mono text-sm bg-gray-100 px-2 py-1 rounded text-brand-700">font-mono text-sm</code>;
   if (variant === "inter")    return <span className="text-2xl font-medium text-gray-900" style={{ fontFamily: "Inter, sans-serif" }}>Inter Typeface Aa</span>;
   if (variant === "mono")     return <span className="text-xl font-mono text-gray-900">JetBrains Mono 01</span>;
   return <p className="text-base text-gray-700">Typography Preview</p>;
@@ -495,13 +495,13 @@ function ButtonRealWorld({ dynamicProps }: { dynamicProps?: Record<string, unkno
 
   const variantClasses: Record<string, string> = {
     primary:
-      "bg-terracotta-600 text-white hover:bg-terracotta-700 active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-terracotta-600 focus:ring-offset-2",
+      "bg-brand-600 text-white hover:bg-brand-700 active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-brand-600 focus:ring-offset-2",
     secondary:
       "bg-gray-100 text-gray-900 hover:bg-gray-200 active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2",
     outline:
-      "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-terracotta-600 focus:ring-offset-2",
+      "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-brand-600 focus:ring-offset-2",
     ghost:
-      "bg-transparent text-gray-700 hover:bg-gray-100 active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-terracotta-600 focus:ring-offset-2",
+      "bg-transparent text-gray-700 hover:bg-gray-100 active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-brand-600 focus:ring-offset-2",
     destructive:
       "bg-red-600 text-white hover:bg-red-700 active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2",
   };
@@ -521,7 +521,7 @@ function BadgeRealWorld({ dynamicProps }: { dynamicProps?: Record<string, unknow
 
   const variantClasses: Record<string, string> = {
     default:     "bg-gray-100 text-gray-700 hover:bg-gray-200",
-    brand:       "bg-terracotta-100 text-terracotta-700 hover:bg-terracotta-200",
+    brand:       "bg-brand-100 text-brand-700 hover:bg-brand-200",
     success:     "bg-green-100 text-green-700 hover:bg-green-200",
     warning:     "bg-amber-100 text-amber-700 hover:bg-amber-200",
     destructive: "bg-red-100 text-red-700 hover:bg-red-200",
@@ -544,7 +544,7 @@ function InputRealWorld({ dynamicProps }: { dynamicProps?: Record<string, unknow
     <input
       type={inputType}
       placeholder={placeholder}
-      className="w-64 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-terracotta-600 focus:border-terracotta-600 hover:border-gray-400 disabled:bg-gray-50 disabled:text-gray-400 disabled:cursor-not-allowed"
+      className="w-64 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-brand-600 hover:border-gray-400 disabled:bg-gray-50 disabled:text-gray-400 disabled:cursor-not-allowed"
     />
   );
 }
@@ -559,17 +559,17 @@ function CardRealWorld({ dynamicProps }: { dynamicProps?: Record<string, unknown
     <div
       className={`w-[272px] rounded-xl p-5 border transition-all cursor-pointer
         ${isTinted
-          ? "bg-terracotta-50/20 border-terracotta-200 hover:border-terracotta-400 hover:shadow-md"
+          ? "bg-brand-50/20 border-brand-200 hover:border-brand-400 hover:shadow-md"
           : "bg-white border-gray-200 hover:border-gray-300 hover:shadow-md"}
         ${isFlat ? "shadow-none" : "shadow-sm"}
-        focus-within:ring-2 focus-within:ring-terracotta-600 focus-within:ring-offset-2
+        focus-within:ring-2 focus-within:ring-brand-600 focus-within:ring-offset-2
         active:scale-[0.99]`}
       tabIndex={0}
     >
-      <p className={`text-sm font-semibold ${isTinted ? "text-terracotta-700" : "text-gray-900"}`}>
+      <p className={`text-sm font-semibold ${isTinted ? "text-brand-700" : "text-gray-900"}`}>
         Card Title
       </p>
-      <p className={`text-xs mt-1 ${isTinted ? "text-terracotta-600/80" : "text-gray-500"}`}>
+      <p className={`text-xs mt-1 ${isTinted ? "text-brand-600/80" : "text-gray-500"}`}>
         Hover, focus, and click this card — it behaves like production.
       </p>
     </div>

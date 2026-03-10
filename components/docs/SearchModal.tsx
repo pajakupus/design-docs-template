@@ -56,7 +56,7 @@ function buildIndex(): SearchItem[] {
 }
 
 const typeBadgeClass: Record<SearchItem["type"], string> = {
-  Component: "bg-terracotta-200 text-terracotta-700",
+  Component: "bg-brand-200 text-brand-700",
   State: "bg-blue-100 text-blue-700",
   Type: "bg-green-100 text-green-700",
   Token: "bg-gray-100 text-gray-600",
@@ -171,7 +171,7 @@ export default function SearchModal() {
                     onClick={() => navigate(item)}
                     onMouseEnter={() => setActiveIdx(i)}
                     className={`w-full text-left flex items-start gap-3 px-4 py-2.5 transition-colors ${
-                      i === activeIdx ? "bg-terracotta-200/30" : "hover:bg-gray-50"
+                      i === activeIdx ? "bg-brand-200/30" : "hover:bg-gray-50"
                     }`}
                   >
                     <span className={`mt-0.5 inline-flex items-center rounded px-1.5 py-0.5 text-[10px] font-medium flex-shrink-0 ${typeBadgeClass[item.type]}`}>

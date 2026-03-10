@@ -15,7 +15,7 @@ export default function Sidebar() {
       {/* Logo / Brand */}
       <div className="px-4 py-5 border-b border-gray-200">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded bg-terracotta-600 flex items-center justify-center">
+          <div className="w-6 h-6 rounded bg-brand-600 flex items-center justify-center">
             <span className="text-white text-xs font-bold">D</span>
           </div>
           <span className="text-sm font-semibold text-gray-900">Design System</span>
@@ -57,9 +57,9 @@ export default function Sidebar() {
                       className={cn(
                         "flex items-center gap-2 px-2.5 py-1.5 rounded-md text-sm transition-colors",
                         isActive
-                          ? "bg-terracotta-600 text-white font-medium"
+                          ? "bg-brand-600 text-white font-medium"
                           : isSpecial
-                          ? "text-gray-600 hover:bg-terracotta-200/50 hover:text-terracotta-700 font-medium"
+                          ? "text-gray-600 hover:bg-brand-200/50 hover:text-brand-700 font-medium"
                           : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                       )}
                     >

@@ -36,7 +36,7 @@ export default function PropsTable({ props }: PropsTableProps) {
               }`}
             >
               <td className="px-4 py-3">
-                <code className="text-xs font-mono text-terracotta-700 bg-terracotta-200/30 px-1.5 py-0.5 rounded">
+                <code className="text-xs font-mono text-brand-700 bg-brand-200/30 px-1.5 py-0.5 rounded">
                   {prop.name}
                 </code>
               </td>

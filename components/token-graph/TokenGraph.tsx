@@ -54,7 +54,7 @@ export default function TokenGraph() {
   const [xCoords,     setXCoords]     = useState({ primRight: 0, semLeft: 0, semRight: 0, compLeft: 0 });
   const [hoveredId,   setHoveredId]   = useState<string | null>(null);
   const [search,      setSearch]      = useState("");
-  const [expanded,    setExpanded]    = useState<Set<string>>(new Set(["terracotta", "neutral"]));
+  const [expanded,    setExpanded]    = useState<Set<string>>(new Set(["brand", "neutral"]));
 
   // Measure every token's VISUAL y-center relative to the graph area top.
   // getBoundingClientRect already accounts for each column's scroll offset,
@@ -146,7 +146,7 @@ export default function TokenGraph() {
           key={`ps-${sem.id}`}
           d={bezierPath(primRight, y1, semLeft, y2)}
           fill="none"
-          stroke={inChain ? "#C67C4E" : "#94a3b8"}
+          stroke={inChain ? "#2563EB" : "#94a3b8"}
           strokeWidth={inChain ? 2 : 1}
           strokeOpacity={dimmed ? 0.04 : inChain ? 0.9 : 0.18}
           style={{ transition: "stroke-opacity 120ms, stroke 120ms, stroke-width 120ms" }}
@@ -169,7 +169,7 @@ export default function TokenGraph() {
           key={`sc-${comp.id}`}
           d={bezierPath(semRight, y1, compLeft, y2)}
           fill="none"
-          stroke={inChain ? "#C67C4E" : "#94a3b8"}
+          stroke={inChain ? "#2563EB" : "#94a3b8"}
           strokeWidth={inChain ? 2 : 1}
           strokeOpacity={dimmed ? 0.04 : inChain ? 0.9 : 0.18}
           style={{ transition: "stroke-opacity 120ms, stroke 120ms, stroke-width 120ms" }}
@@ -191,7 +191,7 @@ export default function TokenGraph() {
         </div>
         <div className="flex items-center gap-3 text-sm">
           <span className="px-3 py-1 rounded-full bg-gray-100 text-gray-600 font-medium">{primCount} primitives</span>
-          <span className="px-3 py-1 rounded-full bg-terracotta-200/60 text-terracotta-700 font-medium">{semCount} semantic</span>
+          <span className="px-3 py-1 rounded-full bg-brand-200/60 text-brand-700 font-medium">{semCount} semantic</span>
           <span className="px-3 py-1 rounded-full bg-gray-900 text-white font-medium">{compCount} component</span>
           <span className="px-3 py-1 rounded-full border border-gray-200 text-gray-500 font-medium">{connCount} connections</span>
         </div>
@@ -208,7 +208,7 @@ export default function TokenGraph() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search tokens (e.g. brand, button, neutral…)"
-            className="w-full pl-9 pr-4 py-2 text-sm border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-terracotta-600 focus:border-terracotta-600 focus:bg-white"
+            className="w-full pl-9 pr-4 py-2 text-sm border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-brand-600 focus:bg-white"
           />
         </div>
         <p className="mt-2 text-xs text-gray-400">
@@ -394,7 +394,7 @@ function PaletteGroup({
                 onMouseLeave={() => setHoveredId(null)}
                 className={cn(
                   "flex items-center gap-2 px-2 py-1.5 rounded-md cursor-default transition-all",
-                  inChain  && "bg-terracotta-200/50 ring-1 ring-terracotta-300",
+                  inChain  && "bg-brand-200/50 ring-1 ring-brand-300",
                   dimmed   && "opacity-25",
                   !hoverChain && "hover:bg-white/70"
                 )}
@@ -406,13 +406,13 @@ function PaletteGroup({
                     <span className="text-[8px] font-mono text-gray-500">T</span>
                   </div>
                 )}
-                <span className={cn("text-xs font-medium flex-shrink-0 w-8", inChain ? "text-terracotta-700 font-semibold" : "text-gray-600")}>
+                <span className={cn("text-xs font-medium flex-shrink-0 w-8", inChain ? "text-brand-700 font-semibold" : "text-gray-600")}>
                   {token.name}
                 </span>
                 <span className="text-[10px] font-mono text-gray-400 flex-1 truncate">{token.value}</span>
                 {refs > 0 && (
                   <span className={cn("text-[10px] font-medium px-1.5 py-0.5 rounded-full flex-shrink-0",
-                    inChain ? "bg-terracotta-600 text-white" : "bg-white text-gray-500"
+                    inChain ? "bg-brand-600 text-white" : "bg-white text-gray-500"
                   )}>
                     {refs}
                   </span>
@@ -434,7 +434,7 @@ function PaletteGroup({
                 ref={setRef(token.id)}
                 onMouseEnter={() => setHoveredId(token.id)}
                 onMouseLeave={() => setHoveredId(null)}
-                className={cn("h-6 flex-1 rounded-sm cursor-default transition-all", inChain && "ring-2 ring-terracotta-600 scale-y-110")}
+                className={cn("h-6 flex-1 rounded-sm cursor-default transition-all", inChain && "ring-2 ring-brand-600 scale-y-110")}
                 style={{ backgroundColor: token.value }}
                 title={`${token.id} · ${token.value}`}
               />
@@ -457,7 +457,7 @@ function PaletteGroup({
                 onMouseLeave={() => setHoveredId(null)}
                 className={cn(
                   "flex items-center gap-2 px-2 py-1 rounded-md cursor-default transition-all",
-                  inChain  && "bg-terracotta-200/50 ring-1 ring-terracotta-300",
+                  inChain  && "bg-brand-200/50 ring-1 ring-brand-300",
                   dimmed   && "opacity-25",
                   !hoverChain && "hover:bg-white/70"
                 )}
@@ -468,7 +468,7 @@ function PaletteGroup({
             );
           })}
           {group.tokens.length > 4 && !search && (
-            <button onClick={onToggle} className="ml-2 text-[10px] text-terracotta-600 hover:underline">
+            <button onClick={onToggle} className="ml-2 text-[10px] text-brand-600 hover:underline">
               +{group.tokens.length - 4} more
             </button>
           )}
@@ -509,7 +509,7 @@ function SemanticGroup({
               onMouseLeave={() => setHoveredId(null)}
               className={cn(
                 "flex items-center gap-2 px-2 py-1.5 rounded-md cursor-default transition-all bg-white border border-transparent",
-                inChain  && "bg-terracotta-200/50 border-terracotta-300 shadow-sm",
+                inChain  && "bg-brand-200/50 border-brand-300 shadow-sm",
                 dimmed   && "opacity-20",
                 !hoverChain && "hover:bg-white hover:border-gray-200"
               )}
@@ -517,12 +517,12 @@ function SemanticGroup({
               {isColorCat && (
                 <div className="w-4 h-4 rounded-sm flex-shrink-0 border border-black/10" style={{ backgroundColor: token.value }} />
               )}
-              <span className={cn("text-xs flex-1 font-mono truncate", inChain ? "text-terracotta-700 font-semibold" : "text-gray-700")}>
+              <span className={cn("text-xs flex-1 font-mono truncate", inChain ? "text-brand-700 font-semibold" : "text-gray-700")}>
                 {token.name}
               </span>
               {refs > 0 && (
                 <span className={cn("text-[10px] font-medium px-1.5 py-0.5 rounded-full flex-shrink-0",
-                  inChain ? "bg-terracotta-600 text-white" : "bg-gray-100 text-gray-500"
+                  inChain ? "bg-brand-600 text-white" : "bg-gray-100 text-gray-500"
                 )}>
                   {refs}
                 </span>
@@ -567,12 +567,12 @@ function ComponentGroup({
               onMouseLeave={() => setHoveredId(null)}
               className={cn(
                 "flex items-center gap-2 px-2 py-1.5 rounded-md cursor-default transition-all bg-white border border-transparent",
-                inChain  && "bg-terracotta-200/50 border-terracotta-300 shadow-sm",
+                inChain  && "bg-brand-200/50 border-brand-300 shadow-sm",
                 dimmed   && "opacity-20",
                 !hoverChain && "hover:bg-white hover:border-gray-200"
               )}
             >
-              <span className={cn("text-xs font-mono flex-1 truncate", inChain ? "text-terracotta-700 font-semibold" : "text-gray-600")}>
+              <span className={cn("text-xs font-mono flex-1 truncate", inChain ? "text-brand-700 font-semibold" : "text-gray-600")}>
                 {token.name.replace(`${component}.`, "")}
               </span>
               {/^#[0-9A-Fa-f]{3,8}$/.test(token.value) && (

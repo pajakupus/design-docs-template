@@ -42,7 +42,7 @@ export default function TokenTable({ tokens }: TokenTableProps) {
             onClick={() => setFormat(format === f ? null : f)}
             className={`px-3 py-1.5 rounded-md text-xs font-medium border transition-colors ${
               format === f
-                ? "bg-terracotta-600 text-white border-terracotta-600"
+                ? "bg-brand-600 text-white border-brand-600"
                 : "bg-white text-gray-600 border-gray-200 hover:border-gray-300 hover:bg-gray-50"
             }`}
           >
@@ -88,7 +88,7 @@ export default function TokenTable({ tokens }: TokenTableProps) {
                       }`}
                     >
                       <td className="px-4 py-3">
-                        <code className="text-xs font-mono text-terracotta-700 bg-terracotta-200/30 px-1.5 py-0.5 rounded">
+                        <code className="text-xs font-mono text-brand-700 bg-brand-200/30 px-1.5 py-0.5 rounded">
                           {token.name}
                         </code>
                       </td>

@@ -24,7 +24,7 @@ export default async function ComponentPage({ params }: PageProps) {
           <h2 className="text-xl font-semibold text-gray-900">Coming soon</h2>
           <p className="mt-2 text-sm text-gray-500">
             Documentation for{" "}
-            <span className="font-medium text-terracotta-600">{component}</span>{" "}
+            <span className="font-medium text-brand-600">{component}</span>{" "}
             is being written.
           </p>
         </div>
@@ -50,7 +50,7 @@ export default async function ComponentPage({ params }: PageProps) {
       {/* Page header */}
       <div className="mb-8 pb-6 border-b border-gray-200">
         <div className="flex items-center gap-2 mb-2">
-          <span className="text-xs font-medium text-terracotta-600 uppercase tracking-wider">
+          <span className="text-xs font-medium text-brand-600 uppercase tracking-wider">
             Component
           </span>
           {doc.status && <StatusBadge status={doc.status} size="md" />}
