@@ -18,8 +18,7 @@ interface AxeViolation {
 
 interface A11yPanelProps {
   targetRef: RefObject<HTMLDivElement | null>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  deps: Record<string, any>;
+  deps: Record<string, unknown>;
 }
 
 const impactColor: Record<string, string> = {
